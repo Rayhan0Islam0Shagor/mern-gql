@@ -35,15 +35,22 @@ app.use(
 );
 
 // static files (build of your frontend)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
-  app.get("*", (_, res) => {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../client/build")));
+//   app.get("/", (_, res) => {
+//     res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
 
-    (err) => {
-      if (err) {
-        res.status(500).send(err);
-      }
-    };
+//     (err) => {
+//       if (err) {
+//         res.status(500).send(err);
+//       }
+//     };
+//   });
+// }
+
+if (process.env.NODE_ENV == "production") {
+  app.get("/", (req, res) => {
+    app.use(express.static(path.resolve(__dirname, "../client", "build")));
+    res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
   });
 }
